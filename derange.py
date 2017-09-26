@@ -1,4 +1,16 @@
-# Python 3 only
+"""
+Compress lists of consecutive integers
+
+INSERT LONG DESCRIPTION HERE
+
+Visit <https://github.com/jwodder/derange> for more information.
+"""
+
+__version__      = '0.1.0.dev1'
+__author__       = 'John Thorvald Wodder II'
+__author_email__ = 'derange@varonathe.org'
+__license__      = 'MIT'
+__url__          = 'https://github.com/jwodder/derange'
 
 def derange(iterable):
     """
