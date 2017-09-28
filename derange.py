@@ -88,6 +88,8 @@ def derange_sorted(iterable):  # for sorted (ascending) inputs
             ranges[-1] = range(ranges[-1].start, x+1)
         elif x > ranges[-1].stop:
             ranges.append(range(x, x+1))
+        else:
+            raise ValueError('sequence not in ascending order')
     return ranges
 
 def deinterval_sorted(adjacent, iterable):  # for sorted (ascending) inputs
