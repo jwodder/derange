@@ -50,12 +50,14 @@ def derange(iterable):
                             = [range(ranges[mid-1].start, ranges[mid].stop)]
                     else:
                         ranges[mid] = range(x, ranges[mid].stop)
+                    break
                 elif x == ranges[mid].stop:
                     if mid+1 < len(ranges) and ranges[mid+1].start == x+1:
                         ranges[mid:mid+2] \
                             = [range(ranges[mid].start, ranges[mid+1].stop)]
                     else:
                         ranges[mid] = range(ranges[mid].start, x+1)
+                    break
                 elif x < ranges[mid].start:
                     high = mid
                 else:
