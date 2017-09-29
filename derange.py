@@ -84,6 +84,8 @@ def derange_sorted(iterable):  # for sorted (ascending) inputs
     for x in iterable:
         if not ranges:
             ranges = [range(x, x+1)]
+        elif x == ranges[-1].stop - 1:
+            pass
         elif x == ranges[-1].stop:
             ranges[-1] = range(ranges[-1].start, x+1)
         elif x > ranges[-1].stop:
