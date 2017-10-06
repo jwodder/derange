@@ -77,7 +77,44 @@ def deinterval(adjacent, iterable):
     :param callable adjacent: called with two elements of ``iterable`` at a
         time to test whether they are "adjacent"/"consecutive"
     """
-    raise NotImplementedError
+    intervals = []
+    for x in iterable:
+        if not intervals:
+            intervals = [(x,x)]
+        elif x < intervals[0][0]  and not adjacent(x, intervals[0][0]):
+            intervals.insert(0, (x,x))
+        elif x > intervals[-1][1] and not adjacent(x, intervals[-1][1]):
+            intervals.append((x,x))
+        else:
+            low, high = 0, len(intervals)
+            while low < high:
+                mid = (low + high) // 2
+                a, b = intervals[mid]
+                if a <= x <= b:
+                    break
+                elif x < a:
+                    if not adjacent(x, a):
+                        high = mid
+                    elif mid > 0 and adjacent(intervals[mid-1][1], x):
+                        intervals[mid-1:mid+1] = [(intervals[mid-1][0], b)]
+                        break
+                    else:
+                        intervals[mid] = (x, b)
+                        break
+                else:
+                    assert x > b
+                    if not adjacent(x, b):
+                        low = mid + 1
+                    elif mid+1 < len(intervals) and \
+                            adjacent(intervals[mid+1][0], x):
+                        intervals[mid:mid+2] = [(a, intervals[mid+1][1])]
+                        break
+                    else:
+                        intervals[mid] = (a, x)
+                        break
+            else:
+                intervals.insert(low, (x,x))
+    return intervals
 
 def derange_sorted(iterable):  # for sorted (ascending) inputs
     ranges = []
