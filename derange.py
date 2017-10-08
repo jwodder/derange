@@ -1,5 +1,5 @@
 """
-Compress lists of consecutive integers
+Compress lists of integers to range objects
 
 INSERT LONG DESCRIPTION HERE
 
