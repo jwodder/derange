@@ -132,4 +132,17 @@ def derange_sorted(iterable):  # for sorted (ascending) inputs
     return ranges
 
 def deinterval_sorted(adjacent, iterable):  # for sorted (ascending) inputs
-    raise NotImplementedError
+    intervals = []
+    for x in iterable:
+        if not intervals:
+            intervals = [(x,x)]
+        elif x == intervals[-1][1]:
+            pass
+        elif x > intervals[-1][1]:
+            if adjacent(x, intervals[-1][1]):
+                intervals[-1] = (intervals[-1][0], x)
+            else:
+                intervals.append((x,x))
+        else:
+            raise ValueError('sequence not in ascending order')
+    return intervals

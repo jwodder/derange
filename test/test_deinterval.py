@@ -1,5 +1,5 @@
 import pytest
-from   derange  import deinterval
+from   derange import deinterval
 
 def delta1(a,b):
     return abs(a-b) <= 1
