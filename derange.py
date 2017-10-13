@@ -14,9 +14,11 @@ __url__          = 'https://github.com/jwodder/derange'
 
 def derange(iterable):
     """
-    Convert a sequence of integers to a minimal sequence of `range` objects
-    that generate all the elements of the input sequence (ignoring duplicates
-    and reordering)
+    Convert a sequence of integers to a minimal list of `range` objects that
+    together contain all of the input elements.
+
+    Input need not be in order (but see also `derange_sorted()`).  Duplicate
+    input values are ignored.
 
     >>> derange([3,4,5,6,7,10,11,12,15,16,17,19,20,21,22,23,24,42,43,44,45,46])
     [range(3, 8), range(10, 13), range(15, 18), range(19, 25), range(42, 47)]
@@ -116,7 +118,12 @@ def deinterval(adjacent, iterable):
                 intervals.insert(low, (x,x))
     return intervals
 
-def derange_sorted(iterable):  # for sorted (ascending) inputs
+def derange_sorted(iterable):
+    """
+    Convert a *non-decreasing* sequence of integers to a minimal list of
+    `range` objects that together contain all of the input elements.  This is
+    faster than `derange()` but only accepts sorted input.
+    """
     ranges = []
     for x in iterable:
         if not ranges:
