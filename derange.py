@@ -126,30 +126,36 @@ def derange_sorted(iterable):
     """
     ranges = []
     for x in iterable:
-        if not ranges:
+        try:
+            end = ranges[-1]
+        except IndexError:
             ranges = [range(x, x+1)]
-        elif x == ranges[-1].stop - 1:
-            pass
-        elif x == ranges[-1].stop:
-            ranges[-1] = range(ranges[-1].start, x+1)
-        elif x > ranges[-1].stop:
-            ranges.append(range(x, x+1))
         else:
-            raise ValueError('sequence not in ascending order')
+            if x == end.stop - 1:
+                pass
+            elif x == end.stop:
+                ranges[-1] = range(end.start, x+1)
+            elif x > end.stop:
+                ranges.append(range(x, x+1))
+            else:
+                raise ValueError('sequence not in ascending order')
     return ranges
 
 def deinterval_sorted(adjacent, iterable):  # for sorted (ascending) inputs
     intervals = []
     for x in iterable:
-        if not intervals:
+        try:
+            a,b = intervals[-1]
+        except IndexError:
             intervals = [(x,x)]
-        elif x == intervals[-1][1]:
-            pass
-        elif x > intervals[-1][1]:
-            if adjacent(x, intervals[-1][1]):
-                intervals[-1] = (intervals[-1][0], x)
-            else:
-                intervals.append((x,x))
         else:
-            raise ValueError('sequence not in ascending order')
+            if x == b:
+                pass
+            elif x > b:
+                if adjacent(x, b):
+                    intervals[-1] = (a, x)
+                else:
+                    intervals.append((x,x))
+            else:
+                raise ValueError('sequence not in ascending order')
     return intervals
