@@ -17,8 +17,8 @@ def derange(iterable):
     Convert a sequence of integers to a minimal list of `range` objects that
     together contain all of the input elements.
 
-    Input need not be in order (but see also `derange_sorted()`).  Duplicate
-    input values are ignored.
+    Output is in strictly ascending order.  Input need not be in order (but see
+    also `derange_sorted()`).  Duplicate input values are ignored.
 
     >>> derange([3,4,5,6,7,10,11,12,15,16,17,19,20,21,22,23,24,42,43,44,45,46])
     [range(3, 8), range(10, 13), range(15, 18), range(19, 25), range(42, 47)]
@@ -71,13 +71,38 @@ def derange(iterable):
 
 def deinterval(adjacent, iterable):
     """
-    Generalization of `derange` for arbitrary types.
+    Convert a sequence of totally-ordered values to a minimal list of closed
+    intervals (represented as pairs of endpoints) that together contain all of
+    the input elements.  This is a generalization of `derange()` for arbitrary
+    types.
 
-    Returns a list of pairs defining a closed interval (so the upper bound is
-    included in each range)
+    Two input values will be placed in the same interval iff they are directly
+    adjacent or there exists a chain of adjacent input values connecting them,
+    where adjacency is defined by the given ``adjacent`` callable.
 
-    :param callable adjacent: called with two elements of ``iterable`` at a
-        time to test whether they are "adjacent"/"consecutive"
+    Output is in strictly ascending order.  Input need not be in order (but see
+    also `deinterval_sorted()`).  Duplicate input values are ignored.
+
+    Note that, unlike with `range` objects, intervals returned from
+    `deinterval()` contain their upper bounds.
+
+    >>> def within_three(x, y):
+    ...     return abs(x-y) <= 3
+    ... 
+    >>> deinterval(within_three, [1.1, 2.2, 3.3, 5.5, 7.7, 8.8])
+    [(1.1, 8.8)]
+    >>> deinterval(within_three, [1.1, 2.2, 3.3, 6.6, 7.7, 8.8])
+    [(1.1, 3.3), (6.6, 8.8)]
+
+    :param callable adjacent: Called with two elements of ``iterable`` at a
+        time to test whether they should be placed in the same interval.
+        The binary relation implied by ``adjacent`` must be reflexive and
+        symmetric, and for all ``x < y < z``, if ``adjacent(x, z)`` is true,
+        then both ``adjacent(x, y)`` and ``adjacent(y, z)`` must also be true.
+    :param iterable iterable: a sequence of values that can be sorted/totally
+        ordered
+    :return: a list of pairs of elements of ``iterable`` in strictly ascending
+        order
     """
     intervals = []
     for x in iterable:
@@ -141,7 +166,12 @@ def derange_sorted(iterable):
                 raise ValueError('sequence not in ascending order')
     return ranges
 
-def deinterval_sorted(adjacent, iterable):  # for sorted (ascending) inputs
+def deinterval_sorted(adjacent, iterable):
+    """
+    Convert a *non-decreasing* sequence of totally-ordered values to a minimal
+    list of closed intervals that together contain all of the input elements.
+    This is faster than `deinterval()` but only accepts sorted input.
+    """
     intervals = []
     for x in iterable:
         try:
