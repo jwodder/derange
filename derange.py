@@ -152,6 +152,8 @@ def derange_sorted(iterable):
     Convert a *non-decreasing* sequence of integers to a minimal list of
     `range` objects that together contain all of the input elements.  This is
     faster than `derange()` but only accepts sorted input.
+
+    :raises ValueError: if ``iterable`` is not sorted
     """
     ranges = []
     for x in iterable:
@@ -175,6 +177,8 @@ def deinterval_sorted(adjacent, iterable):
     Convert a *non-decreasing* sequence of totally-ordered values to a minimal
     list of closed intervals that together contain all of the input elements.
     This is faster than `deinterval()` but only accepts sorted input.
+
+    :raises ValueError: if ``iterable`` is not sorted
     """
     intervals = []
     for x in iterable:
