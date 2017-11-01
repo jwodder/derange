@@ -26,6 +26,23 @@ def delta1(a,b):
     (delta1, [1, 1.5, 2.6], [(1, 1.5), (2.6, 2.6)]),
     (delta1, [1, 1.4, 1.5], [(1, 1.5)]),
     (delta1, [1, 1.5, 2, 2.6], [(1, 2.6)]),
+    (
+        lambda a,b: a[:3] == b[:3], '''
+            portable pot potable potate potato potato potent potentate potion
+            snack snake snark snipe swipe
+            tomahawk tomato toml tonight tunnel
+        '''.split(),
+        [
+            ('portable', 'portable'),
+            ('pot', 'potion'),
+            ('snack', 'snark'),
+            ('snipe', 'snipe'),
+            ('swipe', 'swipe'),
+            ('tomahawk', 'toml'),
+            ('tonight', 'tonight'),
+            ('tunnel', 'tunnel'),
+        ],
+    ),
 ])
 def test_deinterval_sorted(predicate, iterable, output):
     assert deinterval_sorted(predicate, iterable) == output
@@ -37,6 +54,14 @@ def test_deinterval_sorted(predicate, iterable, output):
     (delta1, [2016, 2015, 2016]),
     (delta1, [1, 1.5, 2.6, 2]),
     (delta1, [1, 1.5, 1.4]),
+    (
+        lambda a,b: a[:3] == b[:3], '''
+            potato potato potentate potate
+            tomato tomahawk toml tunnel tonight
+            snake snack snipe snark swipe
+            potion pot potent portable potable
+        '''.split(),
+    ),
 ])
 def test_bad_deinterval_sorted(predicate, iterable):
     with pytest.raises(ValueError, message='sequence not in ascending order'):

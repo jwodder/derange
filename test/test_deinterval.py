@@ -26,6 +26,24 @@ def delta1(a,b):
     (delta1, [1, 1.5, 2.6], [(1, 1.5), (2.6, 2.6)]),
     (delta1, [1, 1.5, 1.4], [(1, 1.5)]),
     (delta1, [1, 1.5, 2.6, 2], [(1, 2.6)]),
+    (
+        lambda a,b: a[:3] == b[:3], '''
+            potato potato potentate potate
+            tomato tomahawk toml tunnel tonight
+            snake snack snipe snark swipe
+            potion pot potent portable potable
+        '''.split(),
+        [
+            ('portable', 'portable'),
+            ('pot', 'potion'),
+            ('snack', 'snark'),
+            ('snipe', 'snipe'),
+            ('swipe', 'swipe'),
+            ('tomahawk', 'toml'),
+            ('tonight', 'tonight'),
+            ('tunnel', 'tunnel'),
+        ],
+    ),
 ])
 def test_deinterval(predicate, iterable, output):
     assert deinterval(predicate, iterable) == output
