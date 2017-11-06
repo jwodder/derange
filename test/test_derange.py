@@ -17,6 +17,10 @@ from   derange import derange
         [46,45,44,43,42,24,23,22,21,20,19,17,16,15,12,11,10,7,6,5,4,3],
         [range(3,8), range(10,13), range(15,18), range(19,25), range(42,47)],
     ),
+    ([-1, -5, -2, -4, -3], [range(-5,0)]),
+    ([-1, -1, -5, -5, -2, -2, -4, -4, -3, -3], [range(-5,0)]),
+    ([-1, -5, -3], [range(-5,-4), range(-3,-2), range(-1,0)]),
+    ([-1, -5, -3, -4], [range(-5,-2), range(-1,0)]),
 ])
 def test_derange(iterable, output):
     assert derange(iterable) == output

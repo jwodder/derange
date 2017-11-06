@@ -43,6 +43,10 @@ def delta1(a,b):
             ('tunnel', 'tunnel'),
         ],
     ),
+    (delta1, [-2.4, -1.5, -1], [(-2.4, -1)]),
+    (delta1, [-2.6, -1.5, -1], [(-2.6, -2.6), (-1.5, -1)]),
+    (delta1, [-1.5, -1.4, -1], [(-1.5, -1)]),
+    (delta1, [-2.6, -2, -1.5, -1], [(-2.6, -1)]),
 ])
 def test_deinterval_sorted(predicate, iterable, output):
     assert deinterval_sorted(predicate, iterable) == output
@@ -62,6 +66,10 @@ def test_deinterval_sorted(predicate, iterable, output):
             potion pot potent portable potable
         '''.split(),
     ),
+    (delta1, [-1, -1.5, -2.4]),
+    (delta1, [-1, -1.5, -2.6]),
+    (delta1, [-1, -1.4, -1.5]),
+    (delta1, [-1, -1.5, -2, 2.6]),
 ])
 def test_bad_deinterval_sorted(predicate, iterable):
     with pytest.raises(ValueError, message='sequence not in ascending order'):
