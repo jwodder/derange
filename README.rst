@@ -73,3 +73,9 @@ endpoints) with ``deinterval``::
     ... ]
     >>> derange.deinterval(within_24_hours, timestamps)
     [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
+    >>> derange.deinterval_sorted(within_24_hours, timestamps)
+    [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
+    >>> derange.deinterval_sorted(within_24_hours, reversed(timestamps))
+    Traceback (most recent call last):
+        ...
+    ValueError: sequence not in ascending order
