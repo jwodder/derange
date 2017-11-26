@@ -1,7 +1,7 @@
-.. image:: http://www.repostatus.org/badges/latest/wip.svg
-    :target: http://www.repostatus.org/#wip
-    :alt: Project Status: WIP — Initial development is in progress, but there
-          has not yet been a stable, usable release suitable for the public.
+.. image:: http://www.repostatus.org/badges/latest/active.svg
+    :target: http://www.repostatus.org/#active
+    :alt: Project Status: Active — The project has reached a stable, usable
+          state and is being actively developed.
 
 .. image:: https://travis-ci.org/jwodder/derange.svg?branch=master
     :target: https://travis-ci.org/jwodder/derange
@@ -73,6 +73,9 @@ endpoints) with ``deinterval``::
     ... ]
     >>> derange.deinterval(within_24_hours, timestamps)
     [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
+
+... which also has a ``deinterval_sorted`` variant::
+
     >>> derange.deinterval_sorted(within_24_hours, timestamps)
     [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
     >>> derange.deinterval_sorted(within_24_hours, reversed(timestamps))
