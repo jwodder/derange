@@ -1,11 +1,13 @@
 """
 Compress lists of integers to range objects
 
-Do you have a list of integers?  Do you want to know what ranges the list
-covers?  Do you need to solve a gaps and islands problem?  Maybe you have a
-list of dates and need to find the longest streak of consecutive days on which
-something happened.  No?  Why not?  Well, either way, the `derange` module is
-here for you, ready to solve all these problems and a couple more.
+Do you have a list of integers?  Do you want to know what ranges of consecutive
+values the list covers?  Do you need to solve a `gaps and islands
+<https://stackoverflow.com/tags/gaps-and-islands/info>`_ problem outside of
+SQL?  Maybe you have a list of dates and need to find the longest streak of
+consecutive days on which something happened.  No?  Why not?  Well, either way,
+the `derange` module is here for you, ready to solve all these problems and a
+couple more.
 
 Visit <https://github.com/jwodder/derange> for more information.
 """
