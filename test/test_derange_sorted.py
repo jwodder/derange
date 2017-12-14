@@ -30,5 +30,5 @@ def test_derange_sorted(iterable, output):
     [-1,-2,-2,-4],
 ])
 def test_bad_derange_sorted(iterable):
-    with pytest.raises(ValueError, message='sequence not in ascending order'):
+    with pytest.raises(ValueError, match='sequence not in ascending order'):
         derange_sorted(iterable)

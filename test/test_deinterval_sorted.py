@@ -72,5 +72,5 @@ def test_deinterval_sorted(predicate, iterable, output):
     (delta1, [-1, -1.5, -2, 2.6]),
 ])
 def test_bad_deinterval_sorted(predicate, iterable):
-    with pytest.raises(ValueError, message='sequence not in ascending order'):
+    with pytest.raises(ValueError, match='sequence not in ascending order'):
         deinterval_sorted(predicate, iterable)
