@@ -10,14 +10,17 @@
     :target: https://codecov.io/gh/jwodder/derange
 
 .. image:: https://img.shields.io/pypi/pyversions/derange.svg
-    :target: https://pypi.python.org/pypi/derange
+    :target: https://pypi.org/project/derange
 
 .. image:: https://img.shields.io/github/license/jwodder/derange.svg
     :target: https://opensource.org/licenses/MIT
     :alt: MIT License
 
+.. image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
+    :target: https://saythanks.io/to/jwodder
+
 `GitHub <https://github.com/jwodder/derange>`_
-| `PyPI <https://pypi.python.org/pypi/derange>`_
+| `PyPI <https://pypi.org/project/derange>`_
 | `Issues <https://github.com/jwodder/derange/issues>`_
 
 Do you have a list of integers?  Do you want to know what ranges of consecutive
