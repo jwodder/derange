@@ -37,7 +37,7 @@ derange``.
 
 Installation
 ============
-``derange`` is written in pure Python 3 with no dependencies.  Just use `pip
+``derange`` requires Python 3.5 or higher.  Just use `pip
 <https://pip.pypa.io>`_ for Python 3 (You have pip, right?) to install::
 
     python3 -m pip install derange
