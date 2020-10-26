@@ -22,6 +22,7 @@
 `GitHub <https://github.com/jwodder/derange>`_
 | `PyPI <https://pypi.org/project/derange>`_
 | `Issues <https://github.com/jwodder/derange/issues>`_
+| `Changelog <https://github.com/jwodder/derange/blob/master/CHANGELOG.md>`_
 
 Do you have a list of integers?  Do you want to know what ranges of consecutive
 values the list covers?  Do you need to solve a `gaps and islands
