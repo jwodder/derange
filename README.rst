@@ -48,42 +48,42 @@ Installation
 Examples
 ========
 Condense commit years obtained from ``git log`` or the like into ``range``
-objects::
+objects:
 
-    >>> import derange
-    >>> derange.derange([2015, 2015, 2015, 2014, 2014, 2011, 2010, 2010, 2009, 2009])
-    [range(2009, 2012), range(2014, 2016)]
+>>> import derange
+>>> derange.derange([2015, 2015, 2015, 2014, 2014, 2011, 2010, 2010, 2009, 2009])
+[range(2009, 2012), range(2014, 2016)]
 
 If the input is already sorted, you can condense it slightly faster with
-``derange_sorted``::
+``derange_sorted``:
 
-    >>> derange.derange_sorted([2009, 2009, 2010, 2010, 2011, 2014, 2014, 2015, 2015, 2015])
-    [range(2009, 2012), range(2014, 2016)]
+>>> derange.derange_sorted([2009, 2009, 2010, 2010, 2011, 2014, 2014, 2015, 2015, 2015])
+[range(2009, 2012), range(2014, 2016)]
 
 Organize non-integer values into closed intervals (represented as pairs of
-endpoints) with ``deinterval``::
+endpoints) with ``deinterval``:
 
-    >>> import datetime
-    >>> # deinterval() requires a callable for determining when two values are "adjacent":
-    >>> def within_24_hours(a,b):
-    ...     return abs(a-b) <= datetime.timedelta(hours=24)
+>>> import datetime
+>>> # deinterval() requires a callable for determining when two values are "adjacent":
+>>> def within_24_hours(a,b):
+...     return abs(a-b) <= datetime.timedelta(hours=24)
+...
+>>> timestamps = [
+...     datetime.datetime(2017, 11, 2, 12, 0),
+...     datetime.datetime(2017, 11, 3, 11, 0),
+...     datetime.datetime(2017, 11, 4, 10, 0),
+...     datetime.datetime(2017, 11, 5,  9, 0),
+...     datetime.datetime(2017, 11, 6,  9, 0),
+...     datetime.datetime(2017, 11, 7, 10, 0),
+... ]
+>>> derange.deinterval(within_24_hours, timestamps)
+[(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
+
+… which also has a ``deinterval_sorted`` variant:
+
+>>> derange.deinterval_sorted(within_24_hours, timestamps)
+[(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
+>>> derange.deinterval_sorted(within_24_hours, reversed(timestamps))
+Traceback (most recent call last):
     ...
-    >>> timestamps = [
-    ...     datetime.datetime(2017, 11, 2, 12, 0),
-    ...     datetime.datetime(2017, 11, 3, 11, 0),
-    ...     datetime.datetime(2017, 11, 4, 10, 0),
-    ...     datetime.datetime(2017, 11, 5,  9, 0),
-    ...     datetime.datetime(2017, 11, 6,  9, 0),
-    ...     datetime.datetime(2017, 11, 7, 10, 0),
-    ... ]
-    >>> derange.deinterval(within_24_hours, timestamps)
-    [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
-
-... which also has a ``deinterval_sorted`` variant::
-
-    >>> derange.deinterval_sorted(within_24_hours, timestamps)
-    [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
-    >>> derange.deinterval_sorted(within_24_hours, reversed(timestamps))
-    Traceback (most recent call last):
-        ...
-    ValueError: sequence not in ascending order
+ValueError: sequence not in ascending order
