@@ -1,8 +1,7 @@
 v0.2.0 (in development)
 -----------------------
-- Drop support for Python 3.3, 3.4, and 3.5
-- Support Python 3.7 through 3.9
-- Support PyPy 3
+- Now support only Python 3.6 and up (tested through 3.9) and PyPy3
+- Add type annotations
 
 v0.1.0 (2017-11-26)
 -------------------
