@@ -212,6 +212,15 @@ def deinterval_sorted(
     list of closed intervals that together contain all of the input elements.
     This is faster than `deinterval()` but only accepts sorted input.
 
+    :param callable adjacent: Called with two elements of ``iterable`` at a
+        time to test whether they should be placed in the same interval.
+        The binary relation implied by ``adjacent`` must be reflexive and
+        symmetric, and for all ``x < y < z``, if ``adjacent(x, z)`` is true,
+        then both ``adjacent(x, y)`` and ``adjacent(y, z)`` must also be true.
+    :param iterable iterable: a sequence of values that can be sorted/totally
+        ordered
+    :return: a list of pairs of elements of ``iterable`` in strictly ascending
+        order
     :raises ValueError: if ``iterable`` is not sorted
     """
     intervals: List[Tuple[OrdT, OrdT]] = []

@@ -30,9 +30,6 @@ consecutive days on which something happened.  No?  Why not?  Well, either way,
 the ``derange`` module is here for you, ready to solve all these problems and a
 couple more.
 
-Full documentation can be viewed after installation with ``python3 -m pydoc
-derange``.
-
 
 Installation
 ============
@@ -52,13 +49,13 @@ objects:
 [range(2009, 2012), range(2014, 2016)]
 
 If the input is already sorted, you can condense it slightly faster with
-``derange_sorted``:
+``derange_sorted()``:
 
 >>> derange.derange_sorted([2009, 2009, 2010, 2010, 2011, 2014, 2014, 2015, 2015, 2015])
 [range(2009, 2012), range(2014, 2016)]
 
 Organize non-integer values into closed intervals (represented as pairs of
-endpoints) with ``deinterval``:
+endpoints) with ``deinterval()``:
 
 >>> import datetime
 >>> # deinterval() requires a callable for determining when two values are "adjacent":
@@ -76,7 +73,7 @@ endpoints) with ``deinterval``:
 >>> derange.deinterval(within_24_hours, timestamps)
 [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
 
-… which also has a ``deinterval_sorted`` variant:
+… which also has a ``deinterval_sorted()`` variant:
 
 >>> derange.deinterval_sorted(within_24_hours, timestamps)
 [(datetime.datetime(2017, 11, 2, 12, 0), datetime.datetime(2017, 11, 6, 9, 0)), (datetime.datetime(2017, 11, 7, 10, 0), datetime.datetime(2017, 11, 7, 10, 0))]
@@ -84,3 +81,63 @@ endpoints) with ``deinterval``:
 Traceback (most recent call last):
     ...
 ValueError: sequence not in ascending order
+
+
+API
+===
+
+.. code:: python
+
+    derange.derange(iterable: Iterable[int]) -> List[range]
+
+Convert a sequence of integers to a minimal list of ``range`` objects that
+together contain all of the input elements.
+
+Output is in strictly ascending order.  Input need not be in order (but see
+also ``derange_sorted()``).  Duplicate input values are ignored.
+
+.. code:: python
+
+    derange.derange_sorted(iterable: Iterable[int]) -> List[range]
+
+Convert a *non-decreasing* sequence of integers to a minimal list of ``range``
+objects that together contain all of the input elements.  This is faster than
+``derange()`` but only accepts sorted input.
+
+.. code:: python
+
+    derange.deinterval(
+        adjacent: Callable[[T,T], bool],
+        iterable: Iterable[T],
+    ) -> List[Tuple[T,T]]
+
+Convert a sequence of totally-ordered values to a minimal list of closed
+intervals (represented as pairs of endpoints) that together contain all of the
+input elements.  This is a generalization of ``derange()`` for arbitrary types.
+
+Two input values will be placed in the same interval iff they are directly
+adjacent or there exists a chain of adjacent input values connecting them,
+where adjacency is defined by the given ``adjacent`` callable.
+
+``adjacent`` will be called with two elements of ``iterable`` at a time to test
+whether they should be placed in the same interval.  The binary relation
+implied by ``adjacent`` must be reflexive and symmetric, and for all ``x < y <
+z``, if ``adjacent(x, z)`` is true, then both ``adjacent(x, y)`` and
+``adjacent(y, z)`` must also be true.
+
+Output is in strictly ascending order.  Input need not be in order (but see
+also ``deinterval_sorted()``).  Duplicate input values are ignored.
+
+Note that, unlike with ``range`` objects, intervals returned from
+``deinterval()`` contain their upper bounds.
+
+.. code:: python
+
+    derange.deinterval_sorted(
+        adjacent: Callable[[T,T], bool],
+        iterable: Iterable[T],
+    ) -> List[Tuple[T,T]]
+
+Convert a *non-decreasing* sequence of totally-ordered values to a minimal list
+of closed intervals that together contain all of the input elements.  This is
+faster than ``deinterval()`` but only accepts sorted input.
