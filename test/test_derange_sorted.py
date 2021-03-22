@@ -1,3 +1,4 @@
+from   typing  import List
 import pytest
 from   derange import derange_sorted
 
@@ -22,7 +23,7 @@ from   derange import derange_sorted
          range(-7, -2)],
     ),
 ])
-def test_derange_sorted(iterable, output):
+def test_derange_sorted(iterable: List[int], output: List[range]) -> None:
     assert derange_sorted(iterable) == output
 
 @pytest.mark.parametrize('iterable', [
@@ -32,6 +33,6 @@ def test_derange_sorted(iterable, output):
     [1,2,4,3],
     [-1,-2,-2,-4],
 ])
-def test_bad_derange_sorted(iterable):
+def test_bad_derange_sorted(iterable: List[int]) -> None:
     with pytest.raises(ValueError, match='sequence not in ascending order'):
         derange_sorted(iterable)

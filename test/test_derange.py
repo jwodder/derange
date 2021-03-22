@@ -1,3 +1,4 @@
+from   typing  import List
 import pytest
 from   derange import derange
 
@@ -22,5 +23,5 @@ from   derange import derange
     ([-1, -5, -3], [range(-5,-4), range(-3,-2), range(-1,0)]),
     ([-1, -5, -3, -4], [range(-5,-2), range(-1,0)]),
 ])
-def test_derange(iterable, output):
+def test_derange(iterable: List[int], output: List[range]) -> None:
     assert derange(iterable) == output

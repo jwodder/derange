@@ -1,8 +1,10 @@
+from   numbers import Real
+from   typing  import Callable, List, Tuple
 import pytest
-from   derange import deinterval
+from   derange import OrdT, deinterval
 
-def delta1(a,b):
-    return abs(a-b) <= 1
+def delta1(a: Real, b: Real) -> bool:
+    return bool(abs(a-b) <= 1)
 
 @pytest.mark.parametrize('predicate,iterable,output', [
     (delta1, [], []),
@@ -53,5 +55,9 @@ def delta1(a,b):
     (delta1, [-1, -1.5, -1.4], [(-1.5, -1)]),
     (delta1, [-1, -1.5, -2.6, -2], [(-2.6, -1)]),
 ])
-def test_deinterval(predicate, iterable, output):
+def test_deinterval(
+    predicate: Callable[[OrdT, OrdT], bool],
+    iterable: List[OrdT],
+    output: List[Tuple[OrdT, OrdT]],
+) -> None:
     assert deinterval(predicate, iterable) == output
