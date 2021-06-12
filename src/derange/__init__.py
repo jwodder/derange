@@ -12,24 +12,25 @@ couple more.
 Visit <https://github.com/jwodder/derange> for more information.
 """
 
-__version__      = '0.2.0'
-__author__       = 'John Thorvald Wodder II'
-__author_email__ = 'derange@varonathe.org'
-__license__      = 'MIT'
-__url__          = 'https://github.com/jwodder/derange'
+__version__ = "0.2.0"
+__author__ = "John Thorvald Wodder II"
+__author_email__ = "derange@varonathe.org"
+__license__ = "MIT"
+__url__ = "https://github.com/jwodder/derange"
 
 import sys
-from   typing import Callable, TYPE_CHECKING, TypeVar
+from typing import Callable, TYPE_CHECKING, TypeVar
 
-if sys.version_info[:2] >= (3,9):
+if sys.version_info[:2] >= (3, 9):
     from collections.abc import Iterable
+
     List = list
     Tuple = tuple
 else:
     from typing import Iterable, List, Tuple
 
 if TYPE_CHECKING:
-    if sys.version_info[:2] >= (3,8):
+    if sys.version_info[:2] >= (3, 8):
         from typing import Protocol
     else:
         from typing_extensions import Protocol
@@ -43,6 +44,7 @@ if TYPE_CHECKING:
 
 
 OrdT = TypeVar("OrdT", bound="Comparable")
+
 
 def derange(iterable: Iterable[int]) -> List[range]:
     """
@@ -67,11 +69,11 @@ def derange(iterable: Iterable[int]) -> List[range]:
     ranges: List[range] = []
     for x in iterable:
         if not ranges:
-            ranges = [range(x, x+1)]
+            ranges = [range(x, x + 1)]
         elif x < ranges[0].start - 1:
-            ranges.insert(0, range(x, x+1))
+            ranges.insert(0, range(x, x + 1))
         elif x > ranges[-1].stop:
-            ranges.append(range(x, x+1))
+            ranges.append(range(x, x + 1))
         else:
             low, high = 0, len(ranges)
             while low < high:
@@ -79,18 +81,20 @@ def derange(iterable: Iterable[int]) -> List[range]:
                 if x in ranges[mid]:
                     break
                 elif x == ranges[mid].start - 1:
-                    if mid > 0 and ranges[mid-1].stop == x:
-                        ranges[mid-1:mid+1] \
-                            = [range(ranges[mid-1].start, ranges[mid].stop)]
+                    if mid > 0 and ranges[mid - 1].stop == x:
+                        ranges[mid - 1 : mid + 1] = [
+                            range(ranges[mid - 1].start, ranges[mid].stop)
+                        ]
                     else:
                         ranges[mid] = range(x, ranges[mid].stop)
                     break
                 elif x == ranges[mid].stop:
-                    if mid+1 < len(ranges) and ranges[mid+1].start == x+1:
-                        ranges[mid:mid+2] \
-                            = [range(ranges[mid].start, ranges[mid+1].stop)]
+                    if mid + 1 < len(ranges) and ranges[mid + 1].start == x + 1:
+                        ranges[mid : mid + 2] = [
+                            range(ranges[mid].start, ranges[mid + 1].stop)
+                        ]
                     else:
-                        ranges[mid] = range(ranges[mid].start, x+1)
+                        ranges[mid] = range(ranges[mid].start, x + 1)
                     break
                 elif x < ranges[mid].start:
                     high = mid
@@ -98,8 +102,9 @@ def derange(iterable: Iterable[int]) -> List[range]:
                     assert x > ranges[mid].stop
                     low = mid + 1
             else:
-                ranges.insert(low, range(x, x+1))
+                ranges.insert(low, range(x, x + 1))
     return ranges
+
 
 def deinterval(
     adjacent: Callable[[OrdT, OrdT], bool],
@@ -142,11 +147,11 @@ def deinterval(
     intervals: List[Tuple[OrdT, OrdT]] = []
     for x in iterable:
         if not intervals:
-            intervals = [(x,x)]
-        elif x < intervals[0][0]  and not adjacent(x, intervals[0][0]):
-            intervals.insert(0, (x,x))
+            intervals = [(x, x)]
+        elif x < intervals[0][0] and not adjacent(x, intervals[0][0]):
+            intervals.insert(0, (x, x))
         elif x > intervals[-1][1] and not adjacent(x, intervals[-1][1]):
-            intervals.append((x,x))
+            intervals.append((x, x))
         else:
             low, high = 0, len(intervals)
             while low < high:
@@ -157,8 +162,8 @@ def deinterval(
                 elif x < a:
                     if not adjacent(x, a):
                         high = mid
-                    elif mid > 0 and adjacent(intervals[mid-1][1], x):
-                        intervals[mid-1:mid+1] = [(intervals[mid-1][0], b)]
+                    elif mid > 0 and adjacent(intervals[mid - 1][1], x):
+                        intervals[mid - 1 : mid + 1] = [(intervals[mid - 1][0], b)]
                         break
                     else:
                         intervals[mid] = (x, b)
@@ -167,16 +172,18 @@ def deinterval(
                     assert x > b
                     if not adjacent(x, b):
                         low = mid + 1
-                    elif mid+1 < len(intervals) and \
-                            adjacent(intervals[mid+1][0], x):
-                        intervals[mid:mid+2] = [(a, intervals[mid+1][1])]
+                    elif mid + 1 < len(intervals) and adjacent(
+                        intervals[mid + 1][0], x
+                    ):
+                        intervals[mid : mid + 2] = [(a, intervals[mid + 1][1])]
                         break
                     else:
                         intervals[mid] = (a, x)
                         break
             else:
-                intervals.insert(low, (x,x))
+                intervals.insert(low, (x, x))
     return intervals
+
 
 def derange_sorted(iterable: Iterable[int]) -> List[range]:
     """
@@ -191,17 +198,18 @@ def derange_sorted(iterable: Iterable[int]) -> List[range]:
         try:
             end = ranges[-1]
         except IndexError:
-            ranges = [range(x, x+1)]
+            ranges = [range(x, x + 1)]
         else:
             if x == end.stop - 1:
                 pass
             elif x == end.stop:
-                ranges[-1] = range(end.start, x+1)
+                ranges[-1] = range(end.start, x + 1)
             elif x > end.stop:
-                ranges.append(range(x, x+1))
+                ranges.append(range(x, x + 1))
             else:
-                raise ValueError('sequence not in ascending order')
+                raise ValueError("sequence not in ascending order")
     return ranges
+
 
 def deinterval_sorted(
     adjacent: Callable[[OrdT, OrdT], bool],
@@ -226,9 +234,9 @@ def deinterval_sorted(
     intervals: List[Tuple[OrdT, OrdT]] = []
     for x in iterable:
         try:
-            a,b = intervals[-1]
+            a, b = intervals[-1]
         except IndexError:
-            intervals = [(x,x)]
+            intervals = [(x, x)]
         else:
             if x == b:
                 pass
@@ -236,7 +244,7 @@ def deinterval_sorted(
                 if adjacent(x, b):
                     intervals[-1] = (a, x)
                 else:
-                    intervals.append((x,x))
+                    intervals.append((x, x))
             else:
-                raise ValueError('sequence not in ascending order')
+                raise ValueError("sequence not in ascending order")
     return intervals
