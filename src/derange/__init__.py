@@ -19,7 +19,7 @@ __license__ = "MIT"
 __url__ = "https://github.com/jwodder/derange"
 
 import sys
-from typing import Callable, TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Callable, TypeVar
 
 if sys.version_info[:2] >= (3, 9):
     from collections.abc import Iterable
