@@ -12,22 +12,14 @@ couple more.
 Visit <https://github.com/jwodder/derange> for more information.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.2.1.dev1"
 __author__ = "John Thorvald Wodder II"
 __author_email__ = "derange@varonathe.org"
 __license__ = "MIT"
 __url__ = "https://github.com/jwodder/derange"
 
 import sys
-from typing import TYPE_CHECKING, Callable, TypeVar
-
-if sys.version_info[:2] >= (3, 9):
-    from collections.abc import Iterable
-
-    List = list
-    Tuple = tuple
-else:
-    from typing import Iterable, List, Tuple
+from typing import TYPE_CHECKING, Callable, Iterable, List, Tuple, TypeVar
 
 if TYPE_CHECKING:
     if sys.version_info[:2] >= (3, 8):
