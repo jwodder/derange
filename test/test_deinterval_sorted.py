@@ -1,5 +1,6 @@
+from __future__ import annotations
+from collections.abc import Callable
 from numbers import Real
-from typing import Callable, List, Tuple
 import pytest
 from derange import OrdT, deinterval_sorted
 
@@ -81,8 +82,8 @@ def delta1(a: Real, b: Real) -> bool:
 )
 def test_deinterval_sorted(
     predicate: Callable[[OrdT, OrdT], bool],
-    iterable: List[OrdT],
-    output: List[Tuple[OrdT, OrdT]],
+    iterable: list[OrdT],
+    output: list[tuple[OrdT, OrdT]],
 ) -> None:
     assert deinterval_sorted(predicate, iterable) == output
 
@@ -139,7 +140,7 @@ def test_deinterval_sorted(
 )
 def test_bad_deinterval_sorted(
     predicate: Callable[[OrdT, OrdT], bool],
-    iterable: List[OrdT],
+    iterable: list[OrdT],
 ) -> None:
     with pytest.raises(ValueError, match="sequence not in ascending order"):
         deinterval_sorted(predicate, iterable)

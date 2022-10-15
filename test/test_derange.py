@@ -1,4 +1,4 @@
-from typing import List
+from __future__ import annotations
 import pytest
 from derange import derange
 
@@ -73,5 +73,5 @@ from derange import derange
         ([-1, -5, -3, -4], [range(-5, -2), range(-1, 0)]),
     ],
 )
-def test_derange(iterable: List[int], output: List[range]) -> None:
+def test_derange(iterable: list[int], output: list[range]) -> None:
     assert derange(iterable) == output

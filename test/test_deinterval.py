@@ -1,5 +1,6 @@
+from __future__ import annotations
+from collections.abc import Callable
 from numbers import Real
-from typing import Callable, List, Tuple
 import pytest
 from derange import OrdT, deinterval
 
@@ -109,7 +110,7 @@ def delta1(a: Real, b: Real) -> bool:
 )
 def test_deinterval(
     predicate: Callable[[OrdT, OrdT], bool],
-    iterable: List[OrdT],
-    output: List[Tuple[OrdT, OrdT]],
+    iterable: list[OrdT],
+    output: list[tuple[OrdT, OrdT]],
 ) -> None:
     assert deinterval(predicate, iterable) == output

@@ -12,14 +12,17 @@ couple more.
 Visit <https://github.com/jwodder/derange> for more information.
 """
 
+from __future__ import annotations
+
 __version__ = "0.3.0.dev1"
 __author__ = "John Thorvald Wodder II"
 __author_email__ = "derange@varonathe.org"
 __license__ = "MIT"
 __url__ = "https://github.com/jwodder/derange"
 
+from collections.abc import Callable, Iterable
 import sys
-from typing import TYPE_CHECKING, Callable, Iterable, List, Tuple, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 if TYPE_CHECKING:
     if sys.version_info[:2] >= (3, 8):
@@ -28,17 +31,17 @@ if TYPE_CHECKING:
         from typing_extensions import Protocol
 
     class Comparable(Protocol):
-        def __lt__(self, other: "Comparable") -> bool:
+        def __lt__(self, other: Comparable) -> bool:
             ...
 
-        def __le__(self, other: "Comparable") -> bool:
+        def __le__(self, other: Comparable) -> bool:
             ...
 
 
 OrdT = TypeVar("OrdT", bound="Comparable")
 
 
-def derange(iterable: Iterable[int]) -> List[range]:
+def derange(iterable: Iterable[int]) -> list[range]:
     """
     Convert a sequence of integers to a minimal list of `range` objects that
     together contain all of the input elements.
@@ -58,7 +61,7 @@ def derange(iterable: Iterable[int]) -> List[range]:
     >>> derange([])
     []
     """
-    ranges: List[range] = []
+    ranges: list[range] = []
     for x in iterable:
         if not ranges:
             ranges = [range(x, x + 1)]
@@ -101,7 +104,7 @@ def derange(iterable: Iterable[int]) -> List[range]:
 def deinterval(
     adjacent: Callable[[OrdT, OrdT], bool],
     iterable: Iterable[OrdT],
-) -> List[Tuple[OrdT, OrdT]]:
+) -> list[tuple[OrdT, OrdT]]:
     """
     Convert a sequence of totally-ordered values to a minimal list of closed
     intervals (represented as pairs of endpoints) that together contain all of
@@ -136,7 +139,7 @@ def deinterval(
     :return: a list of pairs of elements of ``iterable`` in strictly ascending
         order
     """
-    intervals: List[Tuple[OrdT, OrdT]] = []
+    intervals: list[tuple[OrdT, OrdT]] = []
     for x in iterable:
         if not intervals:
             intervals = [(x, x)]
@@ -177,7 +180,7 @@ def deinterval(
     return intervals
 
 
-def derange_sorted(iterable: Iterable[int]) -> List[range]:
+def derange_sorted(iterable: Iterable[int]) -> list[range]:
     """
     Convert a *non-decreasing* sequence of integers to a minimal list of
     `range` objects that together contain all of the input elements.  This is
@@ -185,7 +188,7 @@ def derange_sorted(iterable: Iterable[int]) -> List[range]:
 
     :raises ValueError: if ``iterable`` is not sorted
     """
-    ranges: List[range] = []
+    ranges: list[range] = []
     for x in iterable:
         try:
             end = ranges[-1]
@@ -206,7 +209,7 @@ def derange_sorted(iterable: Iterable[int]) -> List[range]:
 def deinterval_sorted(
     adjacent: Callable[[OrdT, OrdT], bool],
     iterable: Iterable[OrdT],
-) -> List[Tuple[OrdT, OrdT]]:
+) -> list[tuple[OrdT, OrdT]]:
     """
     Convert a *non-decreasing* sequence of totally-ordered values to a minimal
     list of closed intervals that together contain all of the input elements.
@@ -223,7 +226,7 @@ def deinterval_sorted(
         order
     :raises ValueError: if ``iterable`` is not sorted
     """
-    intervals: List[Tuple[OrdT, OrdT]] = []
+    intervals: list[tuple[OrdT, OrdT]] = []
     for x in iterable:
         try:
             a, b = intervals[-1]
