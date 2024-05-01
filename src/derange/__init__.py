@@ -31,11 +31,9 @@ if TYPE_CHECKING:
         from typing_extensions import Protocol
 
     class Comparable(Protocol):
-        def __lt__(self, other: Comparable) -> bool:
-            ...
+        def __lt__(self, other: Comparable) -> bool: ...
 
-        def __le__(self, other: Comparable) -> bool:
-            ...
+        def __le__(self, other: Comparable) -> bool: ...
 
 
 OrdT = TypeVar("OrdT", bound="Comparable")
