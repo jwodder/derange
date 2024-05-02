@@ -1,11 +1,10 @@
 from __future__ import annotations
 from collections.abc import Callable
-from numbers import Real
 import pytest
 from derange import OrdT, deinterval_sorted
 
 
-def delta1(a: Real, b: Real) -> bool:
+def delta1(a: int | float, b: int | float) -> bool:
     return bool(abs(a - b) <= 1)
 
 
