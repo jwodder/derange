@@ -13,16 +13,15 @@ Visit <https://github.com/jwodder/derange> for more information.
 """
 
 from __future__ import annotations
+from collections.abc import Callable, Iterable
+import sys
+from typing import TYPE_CHECKING, TypeVar
 
-__version__ = "0.2.2"
+__version__ = "0.2.2.post1"
 __author__ = "John Thorvald Wodder II"
 __author_email__ = "derange@varonathe.org"
 __license__ = "MIT"
 __url__ = "https://github.com/jwodder/derange"
-
-from collections.abc import Callable, Iterable
-import sys
-from typing import TYPE_CHECKING, TypeVar
 
 if TYPE_CHECKING:
     if sys.version_info[:2] >= (3, 8):

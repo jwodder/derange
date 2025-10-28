@@ -1,3 +1,7 @@
+v0.2.2.post1 (in development)
+-----------------------------
+- Mark as no longer maintained
+
 v0.2.2 (2024-12-01)
 -------------------
 - Drop support for Python 3.6 and 3.7
